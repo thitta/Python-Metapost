@@ -54,7 +54,7 @@ class MetaPostReader(object):
             for mtp in self.mtp_list:
                 result.append(mtp.to_meta(self.meta_configs, self.strict_mode))
         except MetaPostError:
-            raise MTPReaderError("Fail to parse MetaPost, filepath:{}".format(mtp.filepath))
+            raise MetaPostReaderError("Fail to parse MetaPost, filepath:{}".format(mtp.filepath))
         return result
 
     def add_meta_cfg(self, key: str, datatype: str = "str", required: bool = True, df_val: Any = None) -> None:
@@ -94,10 +94,10 @@ class MetaPostReader(object):
     @staticmethod
     def _check_markdown_file(filepath: str) -> None:
         if os.path.isfile(filepath) is False:
-            raise MTPReaderError("MTPReaderError: file path does not exist")
+            raise MetaPostReaderError("MTPReaderError: file path does not exist")
         if os.path.splitext(filepath)[1].lower() != ".md":
-            raise MTPReaderError("MTPReaderError: expect .md extension")
+            raise MetaPostReaderError("MTPReaderError: expect .md extension")
 
 
-class MTPReaderError(Exception):
+class MetaPostReaderError(Exception):
     pass

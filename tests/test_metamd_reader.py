@@ -1,5 +1,5 @@
 import json
-from metapost import MetaPostReader, MTPReaderError, MetaPost, MetaPostError
+from metapost import MetaPostReader, MetaPostReaderError, MetaPost, MetaPostError
 from pathlib import Path
 from unittest import TestCase
 
@@ -13,10 +13,10 @@ class TestMetapostReader(TestCase):
         pass
 
     def test_raise_check_markdown_file(self):
-        with self.assertRaises(MTPReaderError):
+        with self.assertRaises(MetaPostReaderError):
             null_path = Path.cwd().joinpath("invalidFile.txt")
             MetaPostReader._check_markdown_file(null_path)
-        with self.assertRaises(MTPReaderError):
+        with self.assertRaises(MetaPostReaderError):
             null_path = Path.cwd().joinpath("null_path.py")
             MetaPostReader._check_markdown_file(null_path)
 
@@ -82,7 +82,7 @@ class TestMetapostReader(TestCase):
         # Key not exist in source file
         mtpr.add_meta_cfg("missing_key", "str", True)
         mtpr.read_file(path)
-        with self.assertRaises(MTPReaderError):
+        with self.assertRaises(MetaPostReaderError):
             mtpr.to_meta()
 
     def test_ok_export_to_meta_dict_json(self):
@@ -169,10 +169,10 @@ class TestMetapostReader(TestCase):
         # null file path
         mtpr = MetaPostReader()
         null_path = Path.cwd().joinpath("null_dirpath")
-        with self.assertRaises(MTPReaderError):
+        with self.assertRaises(MetaPostReaderError):
             mtpr._check_markdown_file(null_path)
         # not .md file
         mtpr = MetaPostReader()
         null_path = Path.cwd().joinpath("__init__.py")
-        with self.assertRaises(MTPReaderError):
+        with self.assertRaises(MetaPostReaderError):
             mtpr._check_markdown_file(null_path)
