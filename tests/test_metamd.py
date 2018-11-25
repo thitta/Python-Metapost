@@ -142,7 +142,7 @@ class TestMetaMD(TestCase):
                 "title": "A mock post",
                 "subtitle": "Gossips-01",
                 '_filename_': 'post_1',
-                '_filepath_': '/Users/hsufeng/PycharmProjects/metapost/tests/mocks/post_1.md',
+                '_filepath_': os.path.join(MOCKS_ROOT, "post_1.md"),
                 '_last_update_': mmd._get_last_update_dt(filepath)
             },
             "html": "<p>some content</p>"
