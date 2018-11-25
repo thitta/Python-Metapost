@@ -20,7 +20,13 @@ Metapost is extremely simple and powerful. The examples below will demonstrate h
 
 In this section, we are going to demonstrate how to parse a Metapost(markdown) file into useful formats that can interact with our application. Be aware that the meta content is neither json nor YAML, it's a key-value pair separated by a colon.
 
-Assuming we have a MetaPost(.md) file like this. The file starts with a code block containing metas, which is embraced by triple consecutive backtick(\`\`\`).
+First things first, install the package via PyPI
+
+```
+pip install metapost
+```
+
+Assuming we have a MetaPost(.md file) article like this. The file starts with a code block containing metas, which is embraced by triple consecutive backtick(\`\`\`).
 
 ```
 ` ` `
