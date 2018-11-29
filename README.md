@@ -2,7 +2,7 @@ This Python package helps developers parse `Metapost` file.
 
 `Metapost` is a customized `Markdown` format which is meant to support blogs based on local file systems. Metapost allows writer append meta on the markdown file, such as `title` for a post; or `on_index` which denotes whether the post should be placed on the index page - in a most human `readable` and `manageable` way.
 
-`Metapost` file is devised to support my personal micro blog project [blog.someone.tw](http://blog.someone.tw), in which I can write some stuff on my local markdown files, append meta and publish them via console tools. The process is extremely productive since it prevents writer from using unreliable online editors, or spending tons of time on exporting content from source file to HTML. With the help of `Metapost`, writing could become very similar to coding.
+`Metapost` file is devised to support my personal micro blog project [someones.tw](http://someones.tw), in which I can write some stuff on my local markdown files, append meta and publish them via console tools. The process is extremely productive since it prevents writer from using unreliable online editors, or spending tons of time on exporting content from source file to HTML. With the help of `Metapost`, writing could become very similar to coding.
 
 # How Metapost Works
 
