@@ -52,7 +52,7 @@ class MetaPost(object):
             raise MetaPostError("MataMDError: invalid content.")
         return cls(source_text)
 
-    def to_dict(self, meta_configs: list, strict_mode: bool = True, md_exts: list = [ExtraExtension()]) -> dict:
+    def to_dict(self, meta_configs: list, strict_mode: bool = True, md_exts: list = None) -> dict:
         # meta
         result = dict()
         result["meta"] = dict()
@@ -62,7 +62,8 @@ class MetaPost(object):
         result["html"] = self.to_html(md_exts)
         return result
 
-    def to_json(self, meta_configs: list, strict_mode: bool = True, md_exts: list = [ExtraExtension()]) -> str:
+    def to_json(self, meta_configs: list, strict_mode: bool = True, md_exts: list = None) -> str:
+
         return json.dumps(self.to_dict(meta_configs, strict_mode, md_exts))
 
     def to_meta(self, meta_configs: list, strict_mode: bool = True) -> dict:
@@ -93,7 +94,9 @@ class MetaPost(object):
             result[key] = self._type_cast(result[key], datatype)
         return result
 
-    def to_html(self, md_exts: list = []) -> str:
+    def to_html(self, md_exts: list = None) -> str:
+        if md_exts is None:
+            md_exts = [ExtraExtension()]
         content_txt = self._extract_block(self.source_text, "content")
         html = markdown.markdown(content_txt, extensions=md_exts)
         html = self._append_target_equals_blank(html)
