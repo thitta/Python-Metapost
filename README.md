@@ -84,7 +84,7 @@ Let's set meta configs and parse it again
 from metapost import MetaPostReader
 
 path = ".\ExampleMetaPost.md"
-mtpr = MetaPostReaser()
+mtpr = MetaPostPaser()
 
 # add_meta_config()
 # key: str, datatype: str = "str", required: bool = True, df_val: Any = None
