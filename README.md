@@ -16,6 +16,12 @@ Metapost is extremely simple and powerful. The examples below will demonstrate h
 
 # Examples
 
+## Install via pip
+
+```
+pip install metapost
+```
+
 ## The First Example
 
 In this section, we are going to demonstrate how to parse a Metapost(markdown) file into useful formats that can interact with our application. Be aware that the meta content is neither json nor YAML, it's a key-value pair separated by a colon.
