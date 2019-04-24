@@ -55,7 +55,7 @@ from metapost import MetaPostReader
 path = ".\myMetaPostFilepath.md"
 
 # instantiate MetaPostReader
-mtpr = MetaPostReaser()
+mtpr = MetaPostReader()
 mtpr.set_strict_mode(False)
 
 # read and export to python dict
