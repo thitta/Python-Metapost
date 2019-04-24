@@ -19,6 +19,12 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
+        "datetime",
+        "json",
+        "markdown",
+        "os",
+        "re",
+        "typing",
         "tzlocal"
     ]
 )
