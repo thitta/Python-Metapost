@@ -1,8 +1,13 @@
 This Python package helps developers parse `Metapost` file.
 
-`Metapost` is a customized `Markdown` format which is meant to support blogs based on local file systems. Metapost allows writer append meta on the markdown file, such as `title` for a post; or `on_index` which denotes whether the post should be placed on the index page - in a most human `readable` and `manageable` way.
+Metapost allows meta data to be appended to markdown files, such as `title` for a post; or `on_index` which denotes whether the post should be placed on the index page -- in a most human `readable` and `manageable` way.
 
-`Metapost` file is devised to support my personal micro blog project [blog.someone.tw](http://blog.someone.tw), in which I can write some stuff on my local markdown files, append meta and publish them via console tools. The process is extremely productive since it prevents writer from using unreliable online editors, or spending tons of time on exporting content from source file to HTML. With the help of `Metapost`, writing could become very similar to coding.
+# Use Case
+
+Metapost is meant to help developers efficiently manipulate mock data when building CMS service.
+You can put a bunch of markdown files (with meta info) in a folder,
+then use `MetaPostReader` to parse them into a list of dictionaries, 
+which can easily be imported into database via ORM modules.
 
 # How Metapost Works
 
@@ -16,7 +21,7 @@ Metapost is extremely simple and powerful. The examples below will demonstrate h
 
 # Examples
 
-## The First Example
+## Quickstart
 
 In this section, we are going to demonstrate how to parse a Metapost(markdown) file into useful formats that can interact with our application. Be aware that the meta content is neither json nor YAML, it's a key-value pair separated by a colon.
 
@@ -55,7 +60,7 @@ from metapost import MetaPostReader
 path = ".\myMetaPostFilepath.md"
 
 # instantiate MetaPostReader
-mtpr = MetaPostReaser()
+mtpr = MetaPostReader()
 mtpr.set_strict_mode(False)
 
 # read and export to python dict
@@ -89,7 +94,7 @@ Let's set meta configs and parse it again
 ``` python
 from metapost import MetaPostReader
 
-path = ".\ExampleMetaPost.md"
+path = "./ExampleMetaPost.md"
 mtpr = MetaPostReaser()
 
 # add_meta_config()
@@ -111,18 +116,22 @@ Now, we can get the content of the file in the format of python `dict`:
     "meta":{"title":"Example post",
             "rank":999,
             "on_top":true,
-            "keywords":["markdown", "meta", "microblog",
+            "keywords":["markdown", "meta", "microblog"],
             "work_hours":35.6,
             ......}
     "html":"<p>......</p>"
 }]
 ```
 
-If the parameter `required` is `True` while your file does not contain that meta key, the reader will report error. This feature can make sure some required metas, such as the title of a post won't be missing. 
+If the parameter `required` is `True` while your file does not contain that meta key, 
+the reader will report error. 
 
 We can compare these three lines of code which clearly demonstrate how `required` and `df_val` works
 
 ```python
+from metapost import MetaPostReader
+mtpr = MetaPostReader()
+
 # meta required, default value not necessary
 mtpr.add_meta_config("title",      "str",   True       )
 
@@ -140,53 +149,68 @@ Another thing worth mention is that `MetaPostReader` adopt elastic approach to p
 We can set the property `strict_mode` on `MetaPostReader`. The defaulted value is `True`, which means the reader won't parse metas that are not defined in configs. Set it to `False` if you wish to parse as many valid metas as possible.
 
 ```python
-mtpr = MetaPostReaser()
+from metapost import MetaPostReader
+mtpr = MetaPostReader()
 
 # strict mode on 
-mtpr = MetaPostReaser().set_strict_mode(True)
+MetaPostReader().set_strict_mode(True)
 
 # strict mode off
-mtpr = MetaPostReaser().set_strict_mode(False)
+MetaPostReader().set_strict_mode(False)
 ```
 
 ## Default Meta
 
-Except for metas we have defined in config, you can find some default ones. They are `_filepath_`, `_filename_` and `_last_update_`. These are meant to provide more information about the source file. For example, I adopt the value of `_last_update_` as the update time of posts on my blog, so that I don't have to key it in by hand.
+Except for metas we have defined in config, you can find some default ones. They are `_content_markdown_`,`_filepath_`, `_filename_` and `_last_update_`. These are meant to provide more information about the source file.
 
 ## Read Multiple Files & Read from Directory
 
-`MetaPostReader` can accommodate and parse multiple files at the same time. All the files loaded will be stored in `MetaPostReader.mtp_list`.
+`MetaPostReader` can also read and stack multiple files, then export them all at once.
+All the files loaded will be stored in `MetaPostReader.mtp_list`.
 
 ```python
+from metapost import MetaPostReader
+
 # read three files into MetaPostReader
 mtpr = MetaPostReader()
-mtpr.read_file(my_path_1)
-mtpr.read_file(my_path_2)
-mtpr.read_file(my_path_3)
+mtpr.read_file("/mocks/file1.md")
+mtpr.read_file("/mocks/file2.md")
+mtpr.read_file("/mocks/file3.md")
 
 # now, the length will be 3
 print(len(mtpr.mtp_list))
 
+# parse all the posts, this returns a list of dictionary
+my_metas = mtpr.to_dict()
+
 # set reset to True if you wish to reset list before read
-mtpr.read_file(my_path_4, reset=True)
+mtpr.read_file("/mocks/file4.md", reset=True)
 
 # now, the length will be 1
 print(len(mtpr.mtp_list))
 ```
 
-You can also read from a directory, which is often the writing space of users. `MetaPostReader.read_dir()` will automatically load all files with `.md` extensions under a directory. If you wish to load all `.md` files in the directory tree, set `walk` to `True`.
+You can also read all files under a specific directory. 
+`MetaPostReader.read_dir()` will automatically load all files with `.md` extensions.
+If you wish to load all `.md` files in the directory tree, just set `walk` to `True`.
+
+This feature is especially useful when importing mock data via migrations in web development.
 
 ```python
-mtpr = MetaPostReader()
+from metapost import MetaPostReader
 
 # Read .md from directory
-mtpr.read_file(my_dirpath)
+my_mock_dirpath = "./mocks"
+mtpr = MetaPostReader()
+mtpr.read_file(my_mock_dirpath, walk=True)
 
-# Read .md from whole directory tree
-mtpr.read_file(my_dirpath, walk=True)
+# get all parsed data
+posts = mtpr.to_dict()
 ```
 
-That's all! If you have any advice, feel free to contact me via email(thittalee@gmail.com) or github. The following API document provides some short description of all the (expected) public methods. Happy coding! 
+That's all! If you have any advice, feel free to contact me via email(thittalee@gmail.com) or github.
+The following API document provides some short description of all the (expected) public methods. 
+Happy coding! 
 
 ## API Document
 

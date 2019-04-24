@@ -91,7 +91,10 @@ class TestMetapostReader(TestCase):
         mtpr.add_meta_cfg("title", "str", True)
         mtpr.read_file(path)
         # to meta
-        exp1 = [{"title": "A mock post", "_filepath_": str(path), "_filename_": "post_1",
+        exp1 = [{"title": "A mock post",
+                 '_content_markdown_': 'some content',
+                 "_filepath_": str(path),
+                 "_filename_": "post_1",
                  "_last_update_": mtpr.mtp_list[0]._get_last_update_dt(path)}]
         act1 = mtpr.to_meta()
         self.assertEqual(exp1, act1)

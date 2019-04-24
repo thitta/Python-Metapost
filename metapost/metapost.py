@@ -79,6 +79,7 @@ class MetaPost(object):
             key_val_tuples = [v for v in key_val_tuples if v[0] in expected_meta_keys]
         result.update(key_val_tuples)
         # Update predefined meta
+        self.predefined_meta["_content_markdown_"] = self._extract_block(self.source_text, block_type="content")
         result.update(self.predefined_meta)
         # check missing key and cast type
         for cfg in meta_configs:

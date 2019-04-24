@@ -143,7 +143,8 @@ class TestMetaMD(TestCase):
                 "subtitle": "Gossips-01",
                 '_filename_': 'post_1',
                 '_filepath_': os.path.join(MOCKS_ROOT, "post_1.md"),
-                '_last_update_': mmd._get_last_update_dt(filepath)
+                '_last_update_': mmd._get_last_update_dt(filepath),
+                '_content_markdown_': 'some content',
             },
             "html": "<p>some content</p>"
         }

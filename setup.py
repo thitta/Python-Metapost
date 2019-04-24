@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="metapost",
-    version="0.0.3",
+    version="1.0.0",
     author="Hsufeng Lee",
     author_email="thittalee@gmail.com",
     description="Tools for interpreting MetaPost",
