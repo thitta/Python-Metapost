@@ -202,7 +202,7 @@ from metapost import MetaPostReader
 # Read .md from directory
 my_mock_dirpath = "./mocks"
 mtpr = MetaPostReader()
-mtpr.read_file(my_mock_dirpath, walk=True)
+mtpr.read_dir(my_mock_dirpath, walk=True)
 
 # get all parsed data
 posts = mtpr.to_dict()
